@@ -1,0 +1,14 @@
+{
+    "withInterfaces": true,
+    "snapshot": false,
+    "modelPropertyNaming": "original",
+    "sortParamsByRequiredFlag": true,
+    "supportsES6": true,
+    "ensureUniqueParams": true,
+    "npmName": "@ravimosharksas/apis-global-libs-angular",
+    "npmVersion": "2.0.0",
+    "npmRepository": "https://www.npmjs.com/package/@ravimosharksas/apis-global-libs-angular",
+    "providedInRoot": true,
+    "allowUnicodeIdentifiers":true,
+    "ngVersion": "7.0.0"
+}

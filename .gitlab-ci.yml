@@ -1,0 +1,70 @@
+image: node:8
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    paths:
+      - dist/
+    expire_in: 20 yrs
+
+test:lint:
+  stage: test
+  script:
+    # - npm run lint
+    - echo "skip test"
+
+test:vulnerabilities:
+  stage: test
+  before_script:
+    - npm install -g npm-check
+  script:
+    - npm-check --skip-unused -i typescript
+  allow_failure: true
+
+# test:codecov:
+#   stage: test
+#   script:
+#     - npm install -g codecov
+#     # - npm test && codecov
+
+# test:node:6:
+#   image: node:6
+#   stage: test
+#   script:
+#     - npm test
+
+# test:node:7:
+#   image: node:7
+#   stage: test
+#   script:
+#     - npm test
+
+# test:node:4:
+#   image: node:4
+#   stage: test
+#   script:
+#     - npm test
+
+publish:
+  stage: deploy
+  only:
+    - tags
+    - triggers
+  script:
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    #- echo '//gitlab.com/api/v4/projects/12304429/packages/npm/:_authToken=${REGISTRY_GITLAB_PASS}' > .npmrc
+    - npm run publish

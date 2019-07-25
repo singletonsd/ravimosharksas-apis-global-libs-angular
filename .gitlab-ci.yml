@@ -33,6 +33,7 @@ test:vulnerabilities:
     - npm install -g npm-check
   script:
     - npm-check --skip-unused -i typescript
+    - npm audit
   allow_failure: true
 
 # test:codecov:

@@ -33,6 +33,13 @@ test:vulnerabilities:
     - npm install -g npm-check
   script:
     - npm-check --skip-unused -i typescript
+  allow_failure: true
+
+test:audit:
+  stage: test
+  before_script:
+    - npm install -g npm-check
+  script:
     - npm audit
   allow_failure: true
 

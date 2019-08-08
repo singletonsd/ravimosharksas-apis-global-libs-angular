@@ -103,6 +103,8 @@ publish:
 
 commit:
   stage: commit
+  before_script:
+    - apk add --no-cache bash curl git
   script:
     - git add .
     - git commit -m "New auto generated library from documentation. [skip ci]"

@@ -30,7 +30,7 @@ build:
   script:
     # Set version to next one if it was trigger by documentation.
     - if [ "${CI_PIPELINE_TRIGGERED}" == "true" ]; then
-        npm version minor --git=false
+        npm version minor --git=false;
       fi
     - if [ "${CI_COMMIT_TAG}" == "" ]; then
         npm run snapshot;

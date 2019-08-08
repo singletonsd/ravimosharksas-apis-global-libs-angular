@@ -26,6 +26,7 @@ build:
   stage: build
   before_script:
     - npm install
+    - npm i -f npm-snapshot
   script:
     - if [ "${CI_COMMIT_TAG}" == "" ]; then
         npm run snapshot;
@@ -95,3 +96,12 @@ publish:
         export PUBLISH_TYPE="-snapshot";
       fi
     - npm run "publish${PUBLISH_TYPE}"
+
+commit:
+  stage: commit
+  script:
+    - git add .
+    - git commit -m "New auto generated library from documentation. [skip ci]"
+    - git push origin master
+  only:
+    - triggers

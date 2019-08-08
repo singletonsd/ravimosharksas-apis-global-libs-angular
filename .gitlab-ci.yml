@@ -1,19 +1,35 @@
-image: node:8
+image: node:8-alpine
 
 cache:
   paths:
     - node_modules/
+    - dist/
 
 stages:
+  - generate
   - build
-  - test
+  - test_static
   - deploy
+  - commit
+
+generate:
+  stage: generate
+  script:
+    - ./scripts/generate.sh
+  only:
+    - triggers
+  cache:
+    paths:
+      - "."
 
 build:
   stage: build
   before_script:
     - npm install
   script:
+    - if [ "${CI_COMMIT_TAG}" == "" ]; then
+        npm run snapshot
+      fi
     - npm run build
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
@@ -21,27 +37,29 @@ build:
       - dist/
     expire_in: 20 yrs
 
-test:lint:
-  stage: test
+lint:
+  stage: test_static
   script:
-    # - npm run lint
-    - echo "skip test"
-
-test:vulnerabilities:
-  stage: test
-  before_script:
-    - npm install -g npm-check
-  script:
-    - npm-check --skip-unused -i typescript
+    - npm run lint
   allow_failure: true
+  except:
+    - schedules
 
-test:audit:
-  stage: test
-  before_script:
-    - npm install -g npm-check
+audit:
+  stage: test_static
   script:
     - npm audit
   allow_failure: true
+  except:
+    - schedules
+
+npm-check:
+  stage: test_static
+  script:
+    - ng run check
+  allow_failure: true
+  except:
+    - schedules
 
 # test:codecov:
 #   stage: test
@@ -69,10 +87,11 @@ test:audit:
 
 publish:
   stage: deploy
-  only:
-    - tags
-    - triggers
-  script:
+  before_script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
     #- echo '//gitlab.com/api/v4/projects/12304429/packages/npm/:_authToken=${REGISTRY_GITLAB_PASS}' > .npmrc
-    - npm run publish
+  script:
+    - if [ "${CI_COMMIT_TAG}" == "" ]; then
+        export PUBLISH_TYPE="-snapshot"
+      fi
+    - npm run "publish${PUBLISH_TYPE}"

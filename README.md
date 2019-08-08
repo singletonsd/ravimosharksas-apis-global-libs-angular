@@ -1,7 +1,5 @@
 # RAVIMOSHARK - APIS - GLOBAL - LIBS - ANGULAR
 
-
-
 ## LIBRARY NAME: [@ravimosharksas/apis-global-libs-angular](https://www.npmjs.com/package/@ravimosharksas/apis-global-libs-angular)
 
 Angular client for Ravimoshark SAS API designed by [Singleton](http://singletonsd.com). You  can find out more about Swagger at [Singleton Web Page](http://singletonsd) or on [Ravimoshark Web Page](https://ravimoshark.com).

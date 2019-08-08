@@ -1,6 +1,6 @@
 {
   "name": "@ravimosharksas/apis-global-libs-angular",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "swagger client for @ravimosharksas/apis-global-libs-angular",
   "keywords": [
     "swagger-client",
@@ -28,7 +28,13 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.json",
     "generate": "./scripts/generate.sh",
-    "publish": "npm publish dist/ --access public"
+    "lint": "echo skipping lint rules...",
+    "publish": "npm publish dist/ --access public",
+    "publish-snapshot": "npm run publish --tag snapshot",
+    "publish-beta": "npm run publish --tag beta",
+    "publish-alpha": "npm run publish --tag alpha",
+    "snapshot": "npm-snapshot $(date -u '+%y%m%d%H%M%S')",
+    "version": "echo $(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g')"
   },
   "peerDependencies": {
     "@angular/core": "7.2.15",
@@ -52,8 +58,5 @@
     "rxjs": "6.5.2",
     "typescript": ">=3.1.1 and <3.3.0",
     "zone.js": "0.9.1"
-  },
-  "publishConfig": {
-    "registry": "https://www.npmjs.com/package/@ravimosharksas/apis-global-libs-angular"
   }
 }

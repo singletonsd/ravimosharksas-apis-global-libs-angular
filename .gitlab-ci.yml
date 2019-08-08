@@ -28,7 +28,7 @@ build:
     - npm install
   script:
     - if [ "${CI_COMMIT_TAG}" == "" ]; then
-        npm run snapshot
+        npm run snapshot;
       fi
     - npm run build
   artifacts:
@@ -92,6 +92,6 @@ publish:
     #- echo '//gitlab.com/api/v4/projects/12304429/packages/npm/:_authToken=${REGISTRY_GITLAB_PASS}' > .npmrc
   script:
     - if [ "${CI_COMMIT_TAG}" == "" ]; then
-        export PUBLISH_TYPE="-snapshot"
+        export PUBLISH_TYPE="-snapshot";
       fi
     - npm run "publish${PUBLISH_TYPE}"

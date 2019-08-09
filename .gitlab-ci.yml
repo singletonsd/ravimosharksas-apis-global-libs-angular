@@ -33,7 +33,7 @@ build:
   before_script:
     - npm install
     - npm i -g npm-snapshot
-    - apk add --no-cache bash grep gawk sed
+    - apk add --no-cache bash grep gawk sed bc coreutils
   script:
     # Set version to next one if it was trigger by documentation.
     - if [ "${CI_PIPELINE_TRIGGERED}" == "true" ]; then

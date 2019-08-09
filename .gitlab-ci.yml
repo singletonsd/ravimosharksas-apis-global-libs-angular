@@ -1,5 +1,8 @@
 image: node:8-alpine
 
+variables:
+  - ORIGINAL_REPOSITORY = "ravimosharksas/apis/global/libs/angular"
+
 cache:
   paths:
     - node_modules/
@@ -13,7 +16,10 @@ stages:
   - commit
 
 generate:
+  image: maven:3.6.1-jdk-13-alpine
   stage: generate
+  before_script:
+    - apk add --no-cache bash curl
   script:
     - ./scripts/generate.sh
   only:
@@ -41,6 +47,10 @@ build:
     paths:
       - dist/
     expire_in: 20 yrs
+  only:
+    changes:
+      - package.json
+      - src/**/*
 
 lint:
   stage: test_static
@@ -49,6 +59,10 @@ lint:
   allow_failure: true
   except:
     - schedules
+  only:
+    changes:
+      - package.json
+      - src/**/*
 
 audit:
   stage: test_static
@@ -57,6 +71,10 @@ audit:
   allow_failure: true
   except:
     - schedules
+  only:
+    changes:
+      - package.json
+      - src/**/*
 
 npm-check:
   stage: test_static
@@ -65,6 +83,10 @@ npm-check:
   allow_failure: true
   except:
     - schedules
+  only:
+    changes:
+      - package.json
+      - src/**/*
 
 # test:codecov:
 #   stage: test
@@ -100,6 +122,12 @@ publish:
         export PUBLISH_TYPE="-snapshot";
       fi
     - npm run "publish${PUBLISH_TYPE}"
+  only:
+    variables:
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+    changes:
+      - package.json
+      - src/**/*
 
 commit:
   stage: commit
@@ -110,4 +138,9 @@ commit:
     - git commit -m "New auto generated library from documentation. [skip ci]"
     - git push origin master
   only:
-    - triggers
+    variables:
+      - ${CI_PROJECT_PATH} == "${ORIGINAL_REPOSITORY}"
+      - ${CI_PIPELINE_TRIGGERED} == "true"
+    changes:
+      - package.json
+      - src/**/*

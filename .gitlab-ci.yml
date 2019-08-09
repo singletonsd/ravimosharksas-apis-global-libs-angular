@@ -7,6 +7,8 @@ cache:
   paths:
     - node_modules/
     - dist/
+    - ./*.json
+    - src/**/*
 
 stages:
   - generate
@@ -24,10 +26,6 @@ generate:
     - ./scripts/generate.sh
   only:
     - triggers
-  cache:
-    paths:
-      - ./*.json
-      - src/**/*
 
 build:
   stage: build

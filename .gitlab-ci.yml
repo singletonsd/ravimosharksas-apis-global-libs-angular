@@ -1,7 +1,7 @@
 image: node:8-alpine
 
 variables:
-  - ORIGINAL_REPOSITORY = "ravimosharksas/apis/global/libs/angular"
+  ORIGINAL_REPOSITORY: "ravimosharksas/apis/global/libs/angular"
 
 cache:
   paths:
@@ -139,8 +139,8 @@ commit:
     - git push origin master
   only:
     variables:
-      - ${CI_PROJECT_PATH} == "${ORIGINAL_REPOSITORY}"
-      - ${CI_PIPELINE_TRIGGERED} == "true"
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $CI_PIPELINE_TRIGGERED == "true"
     changes:
       - package.json
       - src/**/*

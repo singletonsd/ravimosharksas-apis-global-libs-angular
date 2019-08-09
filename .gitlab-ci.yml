@@ -136,6 +136,8 @@ commit:
   before_script:
     - apk add --no-cache bash curl git
   script:
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git add .
     - git commit -m "New auto generated library from documentation. [skip ci]"
     - git push origin master

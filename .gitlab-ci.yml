@@ -26,7 +26,8 @@ generate:
     - triggers
   cache:
     paths:
-      - "."
+      - "*.json"
+      - "src/**/*"
 
 build:
   stage: build

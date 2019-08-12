@@ -130,7 +130,7 @@ publish:
       - src/**/*
 
 commit:
-  stage: build
+  stage: generate
   before_script:
     - apk add --no-cache bash curl git
   script:
@@ -141,6 +141,7 @@ commit:
     - git commit -m "New auto generated library from documentation. [skip ci]"
     - git status
     - git branch
+    - git show-ref
     - git push -u origin master
   only:
     variables:

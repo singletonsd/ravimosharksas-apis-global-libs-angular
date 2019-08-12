@@ -142,7 +142,8 @@ commit:
     - git status
     - git branch
     - git show-ref
-    - git push -u origin master
+    - git push origin HEAD:master
+#    - git push -u origin master
   only:
     variables:
       - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"

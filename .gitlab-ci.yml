@@ -79,7 +79,7 @@ audit:
 npm-check:
   stage: test_static
   script:
-    - ng run check
+    - npm run check
   allow_failure: true
   except:
     - schedules
@@ -139,7 +139,7 @@ commit:
     - git add .
     - git commit -m "New auto generated library from documentation. [skip ci]"
     - git status
-    - git push origin master
+    - git push -u origin master
   only:
     variables:
       - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"

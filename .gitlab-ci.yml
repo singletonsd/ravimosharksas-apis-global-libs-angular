@@ -129,6 +129,7 @@ publish:
   only:
     variables:
       - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
+      - $CI_PIPELINE_TRIGGERED == "true"
     changes:
       - ./*.json
       - src/**/*

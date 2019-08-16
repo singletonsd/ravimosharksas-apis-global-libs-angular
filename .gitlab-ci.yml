@@ -49,8 +49,9 @@ build:
       - node_modules/
   only:
     changes:
-      - package.json
+      - ./*.json
       - src/**/*
+      - .gitlab-ci.yml
 
 lint:
   stage: test_static
@@ -61,8 +62,9 @@ lint:
     - schedules
   only:
     changes:
-      - package.json
+      - ./*.json
       - src/**/*
+      - .gitlab-ci.yml
 
 audit:
   stage: test_static
@@ -73,8 +75,9 @@ audit:
     - schedules
   only:
     changes:
-      - package.json
+      - ./*.json
       - src/**/*
+      - .gitlab-ci.yml
 
 npm-check:
   stage: test_static
@@ -85,8 +88,9 @@ npm-check:
     - schedules
   only:
     changes:
-      - package.json
+      - ./*.json
       - src/**/*
+      - .gitlab-ci.yml
 
 # test:codecov:
 #   stage: test
@@ -126,8 +130,9 @@ publish:
     variables:
       - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
     changes:
-      - package.json
+      - ./*.json
       - src/**/*
+      - .gitlab-ci.yml
 
 commit:
   stage: commit
@@ -152,6 +157,3 @@ commit:
     variables:
       - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
       - $CI_PIPELINE_TRIGGERED == "true"
-    changes:
-      - package.json
-      - src/**/*

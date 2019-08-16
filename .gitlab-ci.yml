@@ -1,15 +1,7 @@
 image: node:8-alpine
 
 variables:
-  ORIGINAL_REPOSITORY: "ravimosharksas/apis/global/libs/angular"
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-    - dist/
-    - ./*.json
-    - src/**/*
+  ORIGINAL_REPOSITORY: ravimosharksas/apis/global/libs/angular
 
 stages:
   - generate
@@ -25,6 +17,10 @@ generate:
     - apk add --no-cache bash curl
   script:
     - ./scripts/generate.sh
+  artifacts:
+    paths:
+      - ./*.json
+      - src/**/*
   only:
     - triggers
 
@@ -44,10 +40,13 @@ build:
       fi
     - npm run build
   artifacts:
-    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    - name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
       - dist/
     expire_in: 20 yrs
+    - name: dependencies
+      paths:
+        - node_modules/
   only:
     changes:
       - package.json
@@ -125,7 +124,7 @@ publish:
     - npm run "publish${PUBLISH_TYPE}"
   only:
     variables:
-      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
     changes:
       - package.json
       - src/**/*

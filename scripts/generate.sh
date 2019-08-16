@@ -27,7 +27,7 @@ if ! type "curl" &> /dev/null; then
     exit 1
 fi
 
-API_SPEC="https://ravimosharksas.gitlab.io/apis/global/documentation/swagger.yaml"
+API_SPEC="https://ravimosharksas.gitlab.io/apis/global/documentation/openapi.json"
 VERSION="2.0.0"
 function usage(){
     echo "1 - swagger spec location."

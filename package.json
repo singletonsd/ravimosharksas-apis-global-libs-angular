@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "ng-packagr -p ng-package.json",
-    "check": "npm-check -i @components* -i @services* -i @env",
+    "check": "npm-check",
     "generate": "./scripts/generate.sh",
     "lint": "echo skipping lint rules...",
     "publish": "npm publish dist/ --access public",

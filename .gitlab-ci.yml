@@ -128,8 +128,7 @@ publish:
     - npm run "publish${PUBLISH_TYPE}"
   only:
     variables:
-      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
-      - $CI_PIPELINE_TRIGGERED == "true"
+      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY && $CI_PIPELINE_TRIGGERED == "true"
     changes:
       - ./*.json
       - src/**/*
@@ -156,5 +155,4 @@ commit:
     - git push origin HEAD:master
   only:
     variables:
-      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
-      - $CI_PIPELINE_TRIGGERED == "true"
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}" && $CI_PIPELINE_TRIGGERED == "true"
